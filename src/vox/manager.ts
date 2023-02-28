@@ -87,7 +87,7 @@ class VoxelManagerInstance {
 
   setId(x: number, y: number, z: number, tileSetId: number) {
     const voxelComponent = this.getMutableVoxelComponent(x, y, z)
-    console.log('VOX7 - Creating a voxel with id', voxelComponent?.entityId, { x, y, z })
+    // console.log('VOX7 - Creating a voxel with id', voxelComponent?.entityId, { x, y, z })
     if (!voxelComponent || voxelComponent.tileSetId == tileSetId) return // If they are already the same, drop out
     const tileSet = VoxelTileSets[tileSetId]
     if (!tileSet) return
@@ -103,7 +103,7 @@ class VoxelManagerInstance {
   }
 
   private updateVoxel(voxel: VoxelComponentSettings, initiator?: Entity) {
-    console.log('Updating a voxel', voxel, initiator)
+    // console.log('Updating a voxel', voxel, initiator)
     const { x, y, z, tileSetId, entityId } = voxel
     const path = getPath(x, y, z)
     const tileSet = VoxelTileSets[tileSetId]
@@ -124,7 +124,7 @@ class VoxelManagerInstance {
       if (!bestMatch || !bestMatch.strength || !strength || !matchData.strength) return
       if (bestMatch.strength < matchData.strength) {
         bestMatch = matchData
-        console.log('Found a new best match', matchData)
+        // console.log('Found a new best match', matchData)
       }
     })
 

@@ -52,7 +52,6 @@ class VoxelFloorInstance {
         MeshRenderer.setPlane(floorTile, [...Dash_UV_QuadTile_Mappings[2][0], ...Dash_UV_QuadTile_Mappings[2][1]])
 
         Material.setPbrMaterial(floorTile, this.texture)
-        console.log({ schema: Material.schema })
 
         FloorTileComponent.create(floorTile, { x, y: 0, z})
 

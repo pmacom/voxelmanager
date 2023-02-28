@@ -58,7 +58,7 @@ export const VoxelMatchmaker = (
 
     rotations.forEach((ids: number[], rIndex: number) => {
         let localstrength = 0
-        console.log('Checking Rotation', rIndex)
+        // console.log('Checking Rotation', rIndex)
         ids.forEach((id: number, index: number) => {
             if(localstrength<0) return
             switch(conditionIdsFlattened[id]){
