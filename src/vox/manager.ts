@@ -5,15 +5,7 @@ import { forEachGrid, GetAbove, GetBelow, GetSame } from './utils/helpers'
 import { VoxelTileSets } from './tiles'
 import { getPath } from './utils/helpers'
 import { VoxelMatchmaker } from './utils/weights'
-
-export const VoxelComponent = engine.defineComponent('VoxelComponent', {
-  x: Schemas.Number,
-  y: Schemas.Number,
-  z: Schemas.Number,
-  tileSetId: Schemas.Number,
-  tileSetType: Schemas.Number,
-  entityId: Schemas.Entity
-})
+import { VoxelComponent } from './components'
 
 class VoxelManagerInstance {
   private voxels: Map<string, Entity> = new Map()
@@ -131,13 +123,13 @@ class VoxelManagerInstance {
     let rotation = 0
     switch (bestMatch.rotationIndex) {
       case 1:
-        rotation = 0
+        rotation = 90
         break
       case 2:
-        rotation = 0
+        rotation = 180
         break
       case 3:
-        rotation = 0
+        rotation = 270
         break
       case 0:
       default:

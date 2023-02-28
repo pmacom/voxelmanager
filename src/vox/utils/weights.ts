@@ -53,7 +53,7 @@ export const VoxelMatchmaker = (
     tileSetId: number,
 ): VoxelMatchmakerResult => {
     let rotationIndex: number | undefined
-    let strength: number | undefined
+    let strength: number = 0
     const rotations = [rotation_0, rotation_90, rotation_120, rotation_270]
 
     rotations.forEach((ids: number[], rIndex: number) => {
@@ -86,7 +86,7 @@ export const VoxelMatchmaker = (
             }
         })
 
-        if(localstrength >= 0){
+        if(localstrength >= strength){
             rotationIndex = rIndex
             strength = localstrength
         }else{

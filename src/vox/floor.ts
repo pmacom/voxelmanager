@@ -2,23 +2,10 @@ import { CameraMode, DeepReadonlyObject, engine, Entity, InputAction, inputSyste
 import { Quaternion, Vector3 } from '@dcl/sdk/math'
 import { Materialize } from '../dash/materialize'
 import { Dash_UV_QuadTile_Mappings } from '../dash/uvs'
-import { VoxelSelectorComponent } from './components'
-import { VoxelCursor, VoxelSelectorSides } from './cursor'
-import { VoxelComponent, VoxelManager } from './manager'
-
-export const FloorTileComponent = engine.defineComponent('FloorTileComponent', {
-  x: Schemas.Number,
-  y: Schemas.Number,
-  z: Schemas.Number,
-})
-
-export enum AppMode {
-  NULL, // VIEW
-  EDIT,
-  DELETE,
-  MOVE,
-}
-
+import { FloorTileComponent, VoxelComponent, VoxelSelectorComponent } from './components'
+import { VoxelCursor } from './cursor'
+import { AppMode, VoxelSelectorSides } from './interfaces'
+import { VoxelManager } from './manager'
 
 const s = 1 // 0.95
 class VoxelFloorInstance {
@@ -36,12 +23,13 @@ class VoxelFloorInstance {
 
   constructor(){
     engine.addSystem(this.system.bind(this))
-    
   }
 
   create(start: Vector3, end: Vector3) {
     for (let x = start.x; x < end.x; x++) {
       for (let z = start.z; z < end.z; z++) {
+
+        // Create a floor tile for every x,z on the ground floor
         const floorTile = engine.addEntity()
         Transform.create(floorTile, {
           position: { x: x + 0.5, y: 0, z: z + 0.5 },
@@ -50,11 +38,11 @@ class VoxelFloorInstance {
         })
         MeshCollider.setPlane(floorTile)
         MeshRenderer.setPlane(floorTile, [...Dash_UV_QuadTile_Mappings[2][0], ...Dash_UV_QuadTile_Mappings[2][1]])
-
         Material.setPbrMaterial(floorTile, this.texture)
-
         FloorTileComponent.create(floorTile, { x, y: 0, z})
 
+        // Set Click Event
+        // TODO: Replace this with a more dynamic setting. More buttons?
         pointerEventsSystem.onPointerDown(
           floorTile,
           function () {
@@ -72,10 +60,12 @@ class VoxelFloorInstance {
   }
 
   system(dt: number){
+    // Throttle the update so it doesn't happen every frame
     this.timer = this.timer+dt
     if(this.timer <= this.updateInterval || this.mode !== AppMode.EDIT) return
     this.timer = 0;
 
+    // TODO: Fix this hack. Nico said you can just get the hit event from MeshRenderer
     const cameraTransform = Transform.get(engine.CameraEntity)
     Raycast.createOrReplace(engine.CameraEntity, {
       maxDistance: 100,
@@ -92,13 +82,17 @@ class VoxelFloorInstance {
         if(!entityId) return
         if(FloorTileComponent.has(entityId as Entity)) this.hoverOverFloorTile(entityId as Entity, result.hits[0])
         if(VoxelComponent.has(entityId as Entity)) this.hoverOverVoxel(entityId as Entity, result.hits[0])
-        if(VoxelSelectorComponent.has(entityId as Entity)) this.hoverOverVoxelOrigin(entityId as Entity, result.hits[0])
+        // if(VoxelSelectorComponent.has(entityId as Entity)) this.hoverOverVoxelOrigin(entityId as Entity, result.hits[0])
       }
     }
   }
 
+
+
+
+
   private hoverOverFloorTile(entity: Entity, event: DeepReadonlyObject<RaycastHit>){
-    const component = FloorTileComponent.getMutable(entity)
+    const component = FloorTileComponent.get(entity)
     const { x, y, z } = component
     VoxelCursor.setPosition(x, y+.01, z, VoxelSelectorSides.BOTTOM)
   }

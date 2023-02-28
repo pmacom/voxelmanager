@@ -9,22 +9,8 @@ import {
 import { Color4, Quaternion } from '@dcl/sdk/math'
 import { Materialize } from '../dash/materialize'
 import { Dash_UV_QuadTile_Mappings } from '../dash/uvs'
+import { QuadTilePosition, VoxelSelectorSides } from './interfaces'
 
-export enum VoxelSelectorSides {
-  TOP,
-  BOTTOM,
-  WEST,
-  EAST,
-  NORTH,
-  SOUTH
-}
-
-export enum QuadTilePosition {
-  TOP_LEFT,
-  TOP_RIGHT,
-  BOTTOM_LEFT,
-  BOTTOM_RIGHT
-}
 
 const scale = 0.99
 const transforms: Map<VoxelSelectorSides, { position: { x: number; y: number; z: number }; rotation: Quaternion }> =
@@ -53,7 +39,7 @@ const transforms: Map<VoxelSelectorSides, { position: { x: number; y: number; z:
       VoxelSelectorSides.SOUTH,
       { position: { x: 0.5 * scale, y: 0, z: 0 }, rotation: Quaternion.fromEulerDegrees(0, 90, 90) }
     ]
-  ])
+])
 
 class VoxelCursorInstance {
   private entity: Entity = engine.addEntity()
