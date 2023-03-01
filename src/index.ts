@@ -4,6 +4,7 @@ import { ReactEcsRenderer } from '@dcl/sdk/react-ecs'
 import { VoxelCursor } from './vox/cursor'
 import { VoxelFloor } from './vox/floor'
 import { VoxelManager } from './vox/manager'
+import { GameController } from './vox/server'
 export * from '@dcl/sdk' // export all the functions required to make the scene work
 import { ui } from './vox/ui'
 
@@ -16,5 +17,7 @@ executeTask(async function () {
   VoxelManager.init()
   VoxelManager.setId(2,2,2,1)
 
+  const gameController = new GameController()
+  
   //   ReactEcsRenderer.setUiRenderer(ui) 
 })
