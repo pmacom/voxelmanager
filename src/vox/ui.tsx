@@ -12,7 +12,7 @@ export const ui = () => {
       <UiEntity
         uiTransform={{
           width: '100%',
-          height: 300,
+          height: Math.random()*100,
           margin: { left: 500 },
           padding: { top: 10, right: 10, bottom: 10, left: 10 },
         }}
@@ -21,7 +21,7 @@ export const ui = () => {
         <Button
           variant="primary"
           value="Click me!"
-          uiTransform={{ width: 200, height: 100 }}
+          uiTransform={{ width: Math.random()*100, height: Math.random()*100 }}
           fontSize={30}
           onMouseDown={()=>{ console.log('CLICKED!')}}
           onMouseUp={()=>{ console.log('CLICKED!')}}
@@ -33,7 +33,7 @@ export const ui = () => {
           font="sans-serif"
           fontSize={30}
           selectedIndex={0}
-          uiTransform={{ width: 300, height: 100 }}
+          uiTransform={{ width: Math.random()*100, height: Math.random()*100 }}
           onChange={(index) => { console.log('Changed', index)}}
         />
 
@@ -44,7 +44,7 @@ export const ui = () => {
              console.log('Changed the input to be', value)
             }}
             uiBackground={{ color: Color4.Red() }}
-            uiTransform={{ width: 300, height: 100, padding: 0 }}
+            uiTransform={{ width: Math.random()*100, height: Math.random()*100, padding: 0 }}
           />
         <Label
           uiTransform={{ width: 1000, height: 200 }}

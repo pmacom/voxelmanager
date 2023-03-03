@@ -5,7 +5,7 @@ import { forEachGrid, GetAbove, GetBelow, GetSame } from './utils/helpers'
 import { VoxelTileSets } from './tiles'
 import { getPath } from './utils/helpers'
 import { VoxelMatchmaker } from './utils/weights'
-import { VoxelComponent } from './components'
+import { DCLConnectSync, VoxelComponent } from './components'
 
 class VoxelManagerInstance {
   private voxels: Map<string, Entity> = new Map()
@@ -32,6 +32,15 @@ class VoxelManagerInstance {
         tileSetId: 0,
         tileSetType: 0,
         entityId: voxel
+      })
+
+      /*
+      DCLConnectedEntity.create(entity, { components: ['Transform', 'CustomVideoScreenComponent], uuid: 'voxel1')
+      */
+
+      const schema = VoxelComponent.schema
+      DCLConnectSync.create(voxel, {
+        components: ['Transform', 'VoxelComponent']
       })
 
       Transform.create(voxel, {

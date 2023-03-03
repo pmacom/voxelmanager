@@ -16,3 +16,15 @@ export const VoxelComponent = engine.defineComponent('VoxelComponent', {
   tileSetType: Schemas.Number,
   entityId: Schemas.Entity
 })
+
+export const VideoScreenComponent = engine.defineComponent('VideoScreenComponent', {
+  src: Schemas.String,
+  playing: Schemas.Boolean,
+  muted: Schemas.Boolean,
+  startAt: Schemas.String
+})
+
+export const DCLConnectSync = engine.defineComponent('DCLConnectSync', {
+  components: Schemas.Array(Schemas.String)
+})
+

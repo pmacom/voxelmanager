@@ -6,7 +6,7 @@ import { GetTileSetWithCalculatedWeights } from "../../utils/weights";
 
 const getModelSrc = (id: number) => `models/walls/walls_type_${id}.glb`
 
-export const Tiles_Walls: TileSet = {
+export const Tiles_Walls_FULL: TileSet = {
     name: "defaultTiles",
     type: VoxelType.WALL,
     tiles: GetTileSetWithCalculatedWeights([
@@ -334,4 +334,11 @@ export const Tiles_Walls: TileSet = {
             ],
         },
     ])    
+}
+
+// Slim down the options for testing.
+export const Tiles_Walls = {
+    name: "defaultTiles",
+    type: VoxelType.WALL,
+    tiles: Tiles_Walls_FULL.tiles.slice(0,3)
 }

@@ -91,7 +91,7 @@ export class GameClient {
 
         this.options = options;
         const handleReconnection = () => {
-            Wait.push(() => this.connect(options), this.attempts * 1000);
+            Wait.create(() => this.connect(options), this.attempts * 1000);
         }
 
         const options_test = {

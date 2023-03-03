@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "SDK7 Template scene",
   "scripts": {
-    "postinstall": "patch-package",
     "start": "sdk-commands start",
     "build": "sdk-commands build",
     "upgrade-sdk": "npm install --save-dev @dcl/sdk@latest",
@@ -20,12 +19,12 @@
   "prettier": {
     "semi": false,
     "singleQuote": true,
+    "tabWidth": 2,
     "printWidth": 120,
     "trailingComma": "none"
   },
   "dependencies": {
-    "colyseus.js": "^0.14.13",
-    "lodash": "^4.17.21",
-    "patch-package": "^6.5.1"
+    "colyseus.js": "^0.14.15-alpha.0",
+    "lodash": "^4.17.21"
   }
 }

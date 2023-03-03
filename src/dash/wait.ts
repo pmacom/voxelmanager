@@ -1,5 +1,6 @@
 import { engine } from "@dcl/sdk/ecs";
 
+
 interface IWaitQueueItem {
     callback: (() => Promise<void>) | (() => void);
     timeout: number;
@@ -10,7 +11,7 @@ interface IWaitQueueItem {
 class WaitInstance {
     private queue: Set<IWaitQueueItem> = new Set();
     constructor() { }
-    push(callback:  (() => Promise<void>) | (() => void), timeout: number) {
+    create(callback: () => void, timeout: number) {
         const value: IWaitQueueItem = {
             callback,
             timeout,
@@ -29,19 +30,8 @@ class WaitInstance {
                 item.isExecuting = true;
                 item.timer = 0;
                 try {
-                    const callback = item.callback();
-                    if(callback instanceof Promise){
-                        callback.catch((err: any) => {
-                            this.log(`Caught error in promise: ${err.message}`)
-                            throw Error(err.message);
-                        }).finally(() => {
-                            item.isExecuting = false;
-                            this.queue.delete(item);
-                        });
-                    }else{
-                        item.isExecuting = false;
-                        this.queue.delete(item);
-                    }
+                    item.callback()
+                    this.queue.delete(item)
                 } catch (err: any) {
                     this.log(`Callback for item`, item, `Threw an error: `, err);
                 } finally {
