@@ -1,7 +1,7 @@
 import { engine, Entity, GltfContainer, MeshCollider, Schemas, Transform } from '@dcl/sdk/ecs'
 import { Quaternion, Vector3 } from '@dcl/sdk/math'
 import { TileData, VoxelComponentSettings, TileMatchmakerResult, VoxelNeighbors } from './interfaces'
-import { forEachGrid, GetAbove, GetBelow, GetSame } from './utils/helpers'
+import { forEachGrid, GetAbove, GetBelow, GetSame, RotationMapping } from './utils/helpers'
 import { VoxelTileSets } from './tiles'
 import { getPath } from './utils/helpers'
 import { TileMatchmaker } from './utils/weights'
@@ -143,71 +143,43 @@ class VoxelManagerInstance {
     return VoxelComponent.getMutable(voxel)
   }
 
-  private updateVoxel(voxel: VoxelComponentSettings, initiator?: Entity) {
-    // console.log('Updating a voxel', voxel, initiator)
-    console.log('UPDATING A VOXEL')
+  private updateVoxel(voxel: VoxelComponentSettings, skipNeighborCheck: boolean = false) {
     const { x, y, z, tileSetId, entityId } = voxel
     const path = getPath(x, y, z)
     const tileSet = VoxelTileSets[tileSetId]
     if (!tileSet) return
     const { tiles } = tileSet
     const neighbors = this.neighbors.get(path)
-    console.log({ neighbors })
     if (!neighbors) return
     const { flattened } = neighbors
     const neighborIdsFlattened = flattened.map((item) => (item && item.tileSetId ? item.tileSetId : 0))
-    if (initiator == entityId) return
 
     let bestMatch: TileMatchmakerResult = { rotation: 0, strength: -1, tileIndex: 0 }
     tiles.forEach((tile: Partial<TileData>, tileIndex: number) => {
       const { flattened: conditionIdsFlattened, model } = tile
       if (!conditionIdsFlattened || !model) return
-      console.log('STARTING')
       const matchData = TileMatchmaker(neighborIdsFlattened, conditionIdsFlattened, tileIndex, tileSetId)
-
-      console.log('WHAT', { matchData })
       const { strength, tileIndex: tileId } = matchData
       if (!bestMatch || !bestMatch.strength || !strength || !matchData.strength) return
-      if (bestMatch.strength < matchData.strength) {
-        bestMatch = matchData
-        // console.log('Found a new best match', matchData)
-      }
+      if (bestMatch.strength < matchData.strength) bestMatch = matchData
     })
 
-    let rotation = 0
-    console.log({ bestMatch })
-    switch (bestMatch.rotation) {
-      case 0:
-        rotation = -90
-        break;
-      case 1:
-        rotation = 0
-        break
-      case 2:
-        rotation = 90
-        break
-      case 3:
-        rotation = 180
-        break
-      default:
-        break
-    }
-    Transform.getMutable(voxel.entityId as Entity).rotation = Quaternion.fromEulerDegrees(0, rotation, 0)
-
     const src = tileSet.tiles[bestMatch.tileIndex].model
+
     if (src) {
+      Transform.getMutable(voxel.entityId as Entity).rotation = Quaternion.fromEulerDegrees(0, RotationMapping[bestMatch.rotation] as number, 0)
       GltfContainer.createOrReplace(entityId as Entity, { src })
       MeshCollider.setBox(entityId as Entity)
-      // if (neighbors) {
-      //   neighbors.flattened.forEach((neighbor: VoxelComponentSettings, index: number) => {
-      //     if (!neighbor || index == 13) return // Ignore yourself
-      //     const { tileSetId, x, y, z } = neighbor
-      //     if (tileSetId !== 0) {
-      //       const neighborVoxel = this.getMutableVoxelComponent(neighbor.x, neighbor.y, neighbor.z)
-      //       if (neighborVoxel) this.updateVoxel(neighborVoxel, initiator ? initiator : neighborVoxel.entityId)
-      //     }
-      //   })
-      // }
+      if (neighbors && !skipNeighborCheck) {
+        neighbors.flattened.forEach((neighbor: VoxelComponentSettings, index: number) => {
+          if (!neighbor || index == 13) return // Ignore yourself (befo yo wrek yosef)
+          const { tileSetId, x, y, z } = neighbor
+          if (tileSetId !== 0) {
+            const neighborVoxel = this.getMutableVoxelComponent(x, y, z)
+            if (neighborVoxel) this.updateVoxel(neighborVoxel, true)
+          }
+        })
+      }
     }
   }
 }

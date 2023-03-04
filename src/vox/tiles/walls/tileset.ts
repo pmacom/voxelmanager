@@ -346,14 +346,14 @@ export const Tiles_Walls_FULL: TileSet = {
     ])    
 }
 
-// export const Tiles_Walls = Tiles_Walls_FULL
+export const Tiles_Walls = Tiles_Walls_FULL
 
 
 /* Slim down the options for testing. */
-export const Tiles_Walls = {
-    name: "defaultTiles",
-    type: TileType.WALL,
-    tiles: Tiles_Walls_FULL.tiles.slice(0,2)
-}
+// export const Tiles_Walls = {
+//     name: "defaultTiles",
+//     type: TileType.WALL,
+//     tiles: Tiles_Walls_FULL.tiles.slice(0,2)
+// }
 
 console.log({ length: Tiles_Walls.tiles.length })

@@ -63,6 +63,15 @@ export const TileMatchmaker = (
             case TileConditions.IsSameTileId:
                 if(rotatedTileSetIds[index] == tileSetId){ lstrength++ }else{ lstrength = -1}
                 break;
+            case TileConditions.IsAnyTile:
+                if(rotatedTileSetIds[index] > 0){ lstrength++ }else{ lstrength = -1}
+                break;
+            case TileConditions.IsEmpty:
+                if(rotatedTileSetIds[index] == 0){ lstrength++ }else{ lstrength = -1}
+                break;
+            case TileConditions.IsEmptyOrOther:
+                if(rotatedTileSetIds[index] == 0 && rotatedTileSetIds[index] != tileSetId){ lstrength++ }else{ lstrength = -1}
+                break;
         }
     })
     if(lstrength > strength){
