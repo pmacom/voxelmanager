@@ -1,10 +1,10 @@
 import { engine, Entity, GltfContainer, MeshCollider, Schemas, Transform } from '@dcl/sdk/ecs'
 import { Quaternion, Vector3 } from '@dcl/sdk/math'
-import { TileData, VoxelComponentSettings, VoxelMatchmakerResult, VoxelNeighbors } from './interfaces'
+import { TileData, VoxelComponentSettings, TileMatchmakerResult, VoxelNeighbors } from './interfaces'
 import { forEachGrid, GetAbove, GetBelow, GetSame } from './utils/helpers'
 import { VoxelTileSets } from './tiles'
 import { getPath } from './utils/helpers'
-import { VoxelMatchmaker } from './utils/weights'
+import { TileMatchmaker } from './utils/weights'
 import { DCLConnectSync, VoxelComponent } from './components'
 
 class VoxelManagerInstance {
@@ -158,34 +158,37 @@ class VoxelManagerInstance {
     const neighborIdsFlattened = flattened.map((item) => (item && item.tileSetId ? item.tileSetId : 0))
     if (initiator == entityId) return
 
-    let bestMatch: VoxelMatchmakerResult = { rotationIndex: 0, strength: -1, tileIndex: 0 }
+    let bestMatch: TileMatchmakerResult = { rotation: 0, strength: -1, tileIndex: 0 }
     tiles.forEach((tile: Partial<TileData>, tileIndex: number) => {
       const { flattened: conditionIdsFlattened, model } = tile
       if (!conditionIdsFlattened || !model) return
       console.log('STARTING')
-      const matchData = VoxelMatchmaker(neighborIdsFlattened, conditionIdsFlattened, tileIndex, tileSetId)
+      const matchData = TileMatchmaker(neighborIdsFlattened, conditionIdsFlattened, tileIndex, tileSetId)
 
-      console.log({ matchData })
-      // const { strength, tileIndex: tileId } = matchData
-      // if (!bestMatch || !bestMatch.strength || !strength || !matchData.strength) return
-      // if (bestMatch.strength < matchData.strength) {
-      //   bestMatch = matchData
-      //   // console.log('Found a new best match', matchData)
-      // }
+      console.log('WHAT', { matchData })
+      const { strength, tileIndex: tileId } = matchData
+      if (!bestMatch || !bestMatch.strength || !strength || !matchData.strength) return
+      if (bestMatch.strength < matchData.strength) {
+        bestMatch = matchData
+        // console.log('Found a new best match', matchData)
+      }
     })
 
     let rotation = 0
-    switch (bestMatch.rotationIndex) {
+    console.log({ bestMatch })
+    switch (bestMatch.rotation) {
+      case 0:
+        rotation = -90
+        break;
       case 1:
-        rotation = 90
+        rotation = 0
         break
       case 2:
-        rotation = 180
+        rotation = 90
         break
       case 3:
-        rotation = 270
+        rotation = 180
         break
-      case 0:
       default:
         break
     }

@@ -1,6 +1,6 @@
 // TODO: Rename a lot of these types so they are more rational. It's a bit confusing to know when/how to use one.
 
-export enum VoxelType {
+export enum TileType {
   DEFAULT,
   WALL,
   EXTERIOR,
@@ -14,15 +14,13 @@ export enum VoxelType {
 export interface TileData {
   model: string
   allowRotation: boolean
-  onlyGroundFloor: boolean
-  weight: number
   above: number[][]
   same: number[][]
   below: number[][]
   flattened: number[]
 }
 
-export enum VoxelConditions {
+export enum TileConditions {
   NULL,
   IsAnyTile,
   IsSameTileId,
@@ -38,15 +36,15 @@ export enum VoxelConditions {
   IsDoorway
 }
 
-export interface VoxelMatchmakerResult {
-  rotationIndex: number | undefined
+export interface TileMatchmakerResult {
+  rotation: number
   strength: number | undefined
   tileIndex: number
 }
 
 export interface TileSet {
   name: string
-  type: VoxelType
+  type: TileType
   tiles: Partial<TileData>[]
 }
 

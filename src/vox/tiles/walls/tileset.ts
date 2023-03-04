@@ -2,11 +2,11 @@
 // Perhaps the output of that blender json file will be parsed by a utility function?
 
 import { flattenDeep } from "lodash";
-import { TileData, TileSet, VoxelConditions, VoxelType } from "../../interfaces";
+import { TileData, TileSet, TileConditions, TileType } from "../../interfaces";
 
 const getModelSrc = (id: number) => `models/walls/walls_type_${id}.glb`
 
-const parse = (tiles: Partial<TileData>[]) => {
+const parseTile = (tiles: Partial<TileData>[]) => {
     return tiles.map(tile => {
         if(tile.above && tile.same && tile.below){
             tile.flattened = flattenDeep([...tile.above, ...tile.same, ...tile.below])
@@ -18,8 +18,8 @@ const parse = (tiles: Partial<TileData>[]) => {
 
 export const Tiles_Walls_FULL: TileSet = {
     name: "defaultTiles",
-    type: VoxelType.WALL,
-    tiles: parse([
+    type: TileType.WALL,
+    tiles: parseTile([
         {
             model: getModelSrc(1),
             allowRotation: true,
@@ -48,7 +48,7 @@ export const Tiles_Walls_FULL: TileSet = {
                 [0, 0, 0],
             ],
             same: [
-                [0, VoxelConditions.IsSameTileId, 0],
+                [0, TileConditions.IsSameTileId, 0],
                 [0, 0, 0],
                 [0, 0, 0],
             ],
@@ -67,8 +67,8 @@ export const Tiles_Walls_FULL: TileSet = {
                 [0, 0, 0],
             ],
             same: [
-                [0, VoxelConditions.IsSameTileId, 0],
-                [0, 0, VoxelConditions.IsSameTileId],
+                [0, TileConditions.IsSameTileId, 0],
+                [0, 0, TileConditions.IsSameTileId],
                 [0, 0, 0],
             ],
             below: [
@@ -86,9 +86,9 @@ export const Tiles_Walls_FULL: TileSet = {
                 [0, 0, 0],
             ],
             same: [
-                [0, VoxelConditions.IsSameTileId, VoxelConditions.IsEmptyOrOther],
-                [0, 0, VoxelConditions.IsSameTileId],
-                [0, VoxelConditions.IsSameTileId, VoxelConditions.IsEmptyOrOther],
+                [0, TileConditions.IsSameTileId, TileConditions.IsEmptyOrOther],
+                [0, 0, TileConditions.IsSameTileId],
+                [0, TileConditions.IsSameTileId, TileConditions.IsEmptyOrOther],
             ],
             below: [
                 [0, 0, 0],
@@ -105,9 +105,9 @@ export const Tiles_Walls_FULL: TileSet = {
                 [0, 0, 0],
             ],
             same: [
-                [VoxelConditions.IsEmptyOrOther, VoxelConditions.IsSameTileId, VoxelConditions.IsEmptyOrOther],
-                [VoxelConditions.IsSameTileId, 0, VoxelConditions.IsSameTileId],
-                [VoxelConditions.IsEmptyOrOther, VoxelConditions.IsSameTileId, VoxelConditions.IsEmptyOrOther],
+                [TileConditions.IsEmptyOrOther, TileConditions.IsSameTileId, TileConditions.IsEmptyOrOther],
+                [TileConditions.IsSameTileId, 0, TileConditions.IsSameTileId],
+                [TileConditions.IsEmptyOrOther, TileConditions.IsSameTileId, TileConditions.IsEmptyOrOther],
             ],
             below: [
                 [0, 0, 0],
@@ -124,9 +124,9 @@ export const Tiles_Walls_FULL: TileSet = {
                 [0, 0, 0],
             ],
             same: [
-                [0, VoxelConditions.IsSameTileId, 0],
+                [0, TileConditions.IsSameTileId, 0],
                 [0, 0, 0],
-                [0, VoxelConditions.IsSameTileId, 0],
+                [0, TileConditions.IsSameTileId, 0],
             ],
             below: [
                 [0, 0, 0],
@@ -143,9 +143,9 @@ export const Tiles_Walls_FULL: TileSet = {
                 [0, 0, 0],
             ],
             same: [
-                [VoxelConditions.IsEmptyOrOther, VoxelConditions.IsSameTileId, VoxelConditions.IsEmptyOrOther],
-                [VoxelConditions.IsSameTileId, 0, VoxelConditions.IsEmptyOrOther],
-                [VoxelConditions.IsSameTileId, VoxelConditions.IsEmptyOrOther, VoxelConditions.IsEmptyOrOther],
+                [TileConditions.IsEmptyOrOther, TileConditions.IsSameTileId, TileConditions.IsEmptyOrOther],
+                [TileConditions.IsSameTileId, 0, TileConditions.IsEmptyOrOther],
+                [TileConditions.IsSameTileId, TileConditions.IsEmptyOrOther, TileConditions.IsEmptyOrOther],
             ],
             below: [
                 [0, 0, 0],
@@ -162,9 +162,9 @@ export const Tiles_Walls_FULL: TileSet = {
                 [0, 0, 0],
             ],
             same: [
-                [VoxelConditions.IsSameTileId, VoxelConditions.IsSameTileId, VoxelConditions.IsSameTileId],
-                [VoxelConditions.IsSameTileId, 0, VoxelConditions.IsSameTileId],
-                [VoxelConditions.IsSameTileId, VoxelConditions.IsSameTileId, VoxelConditions.IsSameTileId],
+                [TileConditions.IsSameTileId, TileConditions.IsSameTileId, TileConditions.IsSameTileId],
+                [TileConditions.IsSameTileId, 0, TileConditions.IsSameTileId],
+                [TileConditions.IsSameTileId, TileConditions.IsSameTileId, TileConditions.IsSameTileId],
             ],
             below: [
                 [0, 0, 0],
@@ -181,9 +181,9 @@ export const Tiles_Walls_FULL: TileSet = {
                 [0, 0, 0],
             ],
             same: [
-                [VoxelConditions.IsEmptyOrOther, VoxelConditions.IsEmptyOrOther, VoxelConditions.IsSameTileId],
-                [VoxelConditions.IsEmptyOrOther, 0, VoxelConditions.IsEmptyOrOther],
-                [VoxelConditions.IsSameTileId, VoxelConditions.IsEmptyOrOther, VoxelConditions.IsEmptyOrOther],
+                [TileConditions.IsEmptyOrOther, TileConditions.IsEmptyOrOther, TileConditions.IsSameTileId],
+                [TileConditions.IsEmptyOrOther, 0, TileConditions.IsEmptyOrOther],
+                [TileConditions.IsSameTileId, TileConditions.IsEmptyOrOther, TileConditions.IsEmptyOrOther],
             ],
             below: [
                 [0, 0, 0],
@@ -200,9 +200,9 @@ export const Tiles_Walls_FULL: TileSet = {
                 [0, 0, 0],
             ],
             same: [
-                [0, VoxelConditions.IsSameTileId, 0],
+                [0, TileConditions.IsSameTileId, 0],
                 [0, 0, 0],
-                [VoxelConditions.IsSameTileId, VoxelConditions.IsEmptyOrOther, 0],
+                [TileConditions.IsSameTileId, TileConditions.IsEmptyOrOther, 0],
             ],
             below: [
                 [0, 0, 0],
@@ -219,9 +219,9 @@ export const Tiles_Walls_FULL: TileSet = {
                 [0, 0, 0],
             ],
             same: [
-                [0, VoxelConditions.IsSameTileId, 0],
-                [0, 0, VoxelConditions.IsEmptyOrOther],
-                [VoxelConditions.IsEmptyOrOther, VoxelConditions.IsEmptyOrOther, VoxelConditions.IsSameTileId],
+                [0, TileConditions.IsSameTileId, 0],
+                [0, 0, TileConditions.IsEmptyOrOther],
+                [TileConditions.IsEmptyOrOther, TileConditions.IsEmptyOrOther, TileConditions.IsSameTileId],
             ],
             below: [
                 [0, 0, 0],
@@ -238,9 +238,9 @@ export const Tiles_Walls_FULL: TileSet = {
                 [0, 0, 0],
             ],
             same: [
-                [VoxelConditions.IsEmptyOrOther, VoxelConditions.IsEmptyOrOther, VoxelConditions.IsSameTileId],
-                [VoxelConditions.IsEmptyOrOther, 0, VoxelConditions.IsEmptyOrOther],
-                [VoxelConditions.IsSameTileId, VoxelConditions.IsEmptyOrOther, VoxelConditions.IsEmptyOrOther],
+                [TileConditions.IsEmptyOrOther, TileConditions.IsEmptyOrOther, TileConditions.IsSameTileId],
+                [TileConditions.IsEmptyOrOther, 0, TileConditions.IsEmptyOrOther],
+                [TileConditions.IsSameTileId, TileConditions.IsEmptyOrOther, TileConditions.IsEmptyOrOther],
             ],
             below: [
                 [0, 0, 0],
@@ -257,9 +257,9 @@ export const Tiles_Walls_FULL: TileSet = {
                 [0, 0, 0],
             ],
             same: [
-                [VoxelConditions.IsSameTileId, VoxelConditions.IsEmptyOrOther, VoxelConditions.IsEmptyOrOther],
-                [VoxelConditions.IsEmptyOrOther, 0, VoxelConditions.IsEmptyOrOther],
-                [VoxelConditions.IsEmptyOrOther, VoxelConditions.IsEmptyOrOther, VoxelConditions.IsEmptyOrOther],
+                [TileConditions.IsSameTileId, TileConditions.IsEmptyOrOther, TileConditions.IsEmptyOrOther],
+                [TileConditions.IsEmptyOrOther, 0, TileConditions.IsEmptyOrOther],
+                [TileConditions.IsEmptyOrOther, TileConditions.IsEmptyOrOther, TileConditions.IsEmptyOrOther],
             ],
             below: [
                 [0, 0, 0],
@@ -276,9 +276,9 @@ export const Tiles_Walls_FULL: TileSet = {
                 [0, 0, 0],
             ],
             same: [
-                [0, VoxelConditions.IsSameTileId, 0],
+                [0, TileConditions.IsSameTileId, 0],
                 [0, 0, 0],
-                [VoxelConditions.IsSameTileId, VoxelConditions.IsEmptyOrOther, VoxelConditions.IsSameTileId],
+                [TileConditions.IsSameTileId, TileConditions.IsEmptyOrOther, TileConditions.IsSameTileId],
             ],
             below: [
                 [0, 0, 0],
@@ -295,9 +295,9 @@ export const Tiles_Walls_FULL: TileSet = {
                 [0, 0, 0],
             ],
             same: [
-                [0, VoxelConditions.IsSameTileId, 0],
+                [0, TileConditions.IsSameTileId, 0],
                 [0, 0, 0],
-                [0, VoxelConditions.IsSameTileId, 0],
+                [0, TileConditions.IsSameTileId, 0],
             ],
             below: [
                 [0, 0, 0],
@@ -310,17 +310,17 @@ export const Tiles_Walls_FULL: TileSet = {
             allowRotation: true,
             above: [
                 [0, 0, 0],
-                [0, VoxelConditions.IsEmptyOrOther, 0],
+                [0, TileConditions.IsEmptyOrOther, 0],
                 [0, 0, 0],
             ],
             same: [
-                [0, VoxelConditions.IsSameTileId, 0],
+                [0, TileConditions.IsSameTileId, 0],
                 [0, 0, 0],
-                [0, VoxelConditions.IsSameTileId, 0],
+                [0, TileConditions.IsSameTileId, 0],
             ],
             below: [
                 [0, 0, 0],
-                [0, VoxelConditions.IsAnyTile, 0],
+                [0, TileConditions.IsAnyTile, 0],
                 [0, 0, 0],
             ],
         },
@@ -333,9 +333,9 @@ export const Tiles_Walls_FULL: TileSet = {
                 [0, 0, 0],
             ],
             same: [
-                [0, VoxelConditions.IsSameTileId, VoxelConditions.IsEmptyOrOther],
-                [0, 0, VoxelConditions.IsSameTileId],
-                [0, VoxelConditions.IsSameTileId, VoxelConditions.IsEmptyOrOther],
+                [0, TileConditions.IsSameTileId, TileConditions.IsEmptyOrOther],
+                [0, 0, TileConditions.IsSameTileId],
+                [0, TileConditions.IsSameTileId, TileConditions.IsEmptyOrOther],
             ],
             below: [
                 [0, 0, 0],
@@ -346,12 +346,14 @@ export const Tiles_Walls_FULL: TileSet = {
     ])    
 }
 
-export const Tiles_Walls = Tiles_Walls_FULL
-// Slim down the options for testing.
-// export const Tiles_Walls = {
-//     name: "defaultTiles",
-//     type: VoxelType.WALL,
-//     tiles: Tiles_Walls_FULL.tiles.slice(0,3)
-// }
+// export const Tiles_Walls = Tiles_Walls_FULL
 
-console.log({ Tiles_Walls })
+
+/* Slim down the options for testing. */
+export const Tiles_Walls = {
+    name: "defaultTiles",
+    type: TileType.WALL,
+    tiles: Tiles_Walls_FULL.tiles.slice(0,2)
+}
+
+console.log({ length: Tiles_Walls.tiles.length })
