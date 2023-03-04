@@ -2,7 +2,7 @@
 
 import { Vector3 } from '@dcl/sdk/math'
 import { flattenDeep } from 'lodash'
-import { TileData, VoxelComponentSettings } from '../interfaces'
+import { VoxelComponentSettings } from '../interfaces'
 
 export const getPath = (x: number, y: number, z: number) => `${x},${y},${z}`
 export const getPathFromVector3 = (position: Vector3) => `${position.x},${position.y},${position.z}`
@@ -36,13 +36,4 @@ export const GetBelow = (voxels: (undefined | VoxelComponentSettings)[]) => [
 ]
 
 export const RotationMapping = [-90, 0, 90, 180]
-
-export const parseTile = (tiles: Partial<TileData>[]) => {
-    return tiles.map(tile => {
-        if(tile.above && tile.same && tile.below){
-            tile.flattened = flattenDeep([...tile.above, ...tile.same, ...tile.below])
-        }
-        return tile
-    })
-}
 

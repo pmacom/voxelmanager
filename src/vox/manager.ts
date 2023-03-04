@@ -5,7 +5,7 @@ import { forEachGrid, GetAbove, GetBelow, GetSame, RotationMapping } from './uti
 import { VoxelTileSets } from './tiles'
 import { getPath } from './utils/helpers'
 import { TileMatchmaker } from './utils/weights'
-import { VoxelTileComponent } from './components'
+import { VoxelComponent } from './components'
 
 class VoxelManagerInstance {
   private voxels: Map<string, Entity> = new Map()
@@ -25,12 +25,12 @@ class VoxelManagerInstance {
       const s = 1
 
       // Create the voxel entity
-      const component = VoxelTileComponent.create(voxel, {
+      const component = VoxelComponent.create(voxel, {
         x,
         y,
         z,
-        tileSetId: 0,
-        tileSetType: 0,
+       // tileSetId: 0,
+       // tileSetType: 0,
         entityId: voxel
       })
 
@@ -48,47 +48,47 @@ class VoxelManagerInstance {
 
 
 
-        voxels.push(this.getMutableVoxelComponent(x+1, y+1, z-1))
-        voxels.push(this.getMutableVoxelComponent(x+1, y+1, z))
-        voxels.push(this.getMutableVoxelComponent(x+1, y+1, z+1))
+        // voxels.push(this.getMutableVoxelComponent(x+1, y+1, z-1))
+        // voxels.push(this.getMutableVoxelComponent(x+1, y+1, z))
+        // voxels.push(this.getMutableVoxelComponent(x+1, y+1, z+1))
 
-        voxels.push(this.getMutableVoxelComponent(x, y+1, z-1))
-        voxels.push(this.getMutableVoxelComponent(x, y+1, z))
-        voxels.push(this.getMutableVoxelComponent(x, y+1, z+1))
+        // voxels.push(this.getMutableVoxelComponent(x, y+1, z-1))
+        // voxels.push(this.getMutableVoxelComponent(x, y+1, z))
+        // voxels.push(this.getMutableVoxelComponent(x, y+1, z+1))
 
-        voxels.push(this.getMutableVoxelComponent(x-1, y+1, z-1))
-        voxels.push(this.getMutableVoxelComponent(x-1, y+1, z))
-        voxels.push(this.getMutableVoxelComponent(x-1, y+1, z+1))
-
-
-
-
-        voxels.push(this.getMutableVoxelComponent(x+1, y, z-1))
-        voxels.push(this.getMutableVoxelComponent(x+1, y, z))
-        voxels.push(this.getMutableVoxelComponent(x+1, y, z+1))
-
-        voxels.push(this.getMutableVoxelComponent(x, y, z-1))
-        voxels.push(this.getMutableVoxelComponent(x, y, z))
-        voxels.push(this.getMutableVoxelComponent(x, y, z+1))
-
-        voxels.push(this.getMutableVoxelComponent(x-1, y, z-1))
-        voxels.push(this.getMutableVoxelComponent(x-1, y, z))
-        voxels.push(this.getMutableVoxelComponent(x-1, y, z+1))
+        // voxels.push(this.getMutableVoxelComponent(x-1, y+1, z-1))
+        // voxels.push(this.getMutableVoxelComponent(x-1, y+1, z))
+        // voxels.push(this.getMutableVoxelComponent(x-1, y+1, z+1))
 
 
 
 
-        voxels.push(this.getMutableVoxelComponent(x+1, y-1, z-1))
-        voxels.push(this.getMutableVoxelComponent(x+1, y-1, z))
-        voxels.push(this.getMutableVoxelComponent(x+1, y-1, z+1))
+        // voxels.push(this.getMutableVoxelComponent(x+1, y, z-1))
+        // voxels.push(this.getMutableVoxelComponent(x+1, y, z))
+        // voxels.push(this.getMutableVoxelComponent(x+1, y, z+1))
 
-        voxels.push(this.getMutableVoxelComponent(x, y-1, z-1))
-        voxels.push(this.getMutableVoxelComponent(x, y-1, z))
-        voxels.push(this.getMutableVoxelComponent(x, y-1, z+1))
+        // voxels.push(this.getMutableVoxelComponent(x, y, z-1))
+        // voxels.push(this.getMutableVoxelComponent(x, y, z))
+        // voxels.push(this.getMutableVoxelComponent(x, y, z+1))
 
-        voxels.push(this.getMutableVoxelComponent(x-1, y-1, z-1))
-        voxels.push(this.getMutableVoxelComponent(x-1, y-1, z))
-        voxels.push(this.getMutableVoxelComponent(x-1, y-1, z+1))
+        // voxels.push(this.getMutableVoxelComponent(x-1, y, z-1))
+        // voxels.push(this.getMutableVoxelComponent(x-1, y, z))
+        // voxels.push(this.getMutableVoxelComponent(x-1, y, z+1))
+
+
+
+
+        // voxels.push(this.getMutableVoxelComponent(x+1, y-1, z-1))
+        // voxels.push(this.getMutableVoxelComponent(x+1, y-1, z))
+        // voxels.push(this.getMutableVoxelComponent(x+1, y-1, z+1))
+
+        // voxels.push(this.getMutableVoxelComponent(x, y-1, z-1))
+        // voxels.push(this.getMutableVoxelComponent(x, y-1, z))
+        // voxels.push(this.getMutableVoxelComponent(x, y-1, z+1))
+
+        // voxels.push(this.getMutableVoxelComponent(x-1, y-1, z-1))
+        // voxels.push(this.getMutableVoxelComponent(x-1, y-1, z))
+        // voxels.push(this.getMutableVoxelComponent(x-1, y-1, z+1))
 
 
         // Set the neighbors
@@ -126,20 +126,30 @@ class VoxelManagerInstance {
     return neighbors
   }
 
+  setVoxel(x: number, y: number, z: number, voxelType: number, voxelSetId: number, voxelTypeId: number){
+    const voxelComponent = this.getMutableVoxelComponent(x, y, z)
+    // if (!voxelComponent || voxelComponent.tileSetId == tileSetId) return // If they are already the same, drop out
+    // const tileSet = VoxelTileSets[tileSetId]
+    // if (!tileSet) return
+    // voxelComponent.tileSetId = tileSetId
+    // voxelComponent.tileSetType = tileSet.type
+    // this.updateVoxel(voxelComponent)
+  }
+
   setId(x: number, y: number, z: number, tileSetId: number) {
     const voxelComponent = this.getMutableVoxelComponent(x, y, z)
-    if (!voxelComponent || voxelComponent.tileSetId == tileSetId) return // If they are already the same, drop out
-    const tileSet = VoxelTileSets[tileSetId]
-    if (!tileSet) return
-    voxelComponent.tileSetId = tileSetId
-    voxelComponent.tileSetType = tileSet.type
-    this.updateVoxel(voxelComponent)
+    // if (!voxelComponent || voxelComponent.tileSetId == tileSetId) return // If they are already the same, drop out
+    // const tileSet = VoxelTileSets[tileSetId]
+    // if (!tileSet) return
+    // voxelComponent.tileSetId = tileSetId
+    // voxelComponent.tileSetType = tileSet.type
+    // this.updateVoxel(voxelComponent)
   }
 
   private getMutableVoxelComponent(x: number, y: number, z: number) {
     const voxel = this.getVoxel(x, y, z)
     if (!voxel) return
-    return VoxelTileComponent.getMutable(voxel)
+    return VoxelComponent.getMutable(voxel)
   }
 
   private updateVoxel(voxel: VoxelComponentSettings, skipNeighborCheck: boolean = false) {
@@ -175,7 +185,7 @@ class VoxelManagerInstance {
           const { tileSetId, x, y, z } = neighbor
           if (tileSetId !== 0) {
             const neighborVoxel = this.getMutableVoxelComponent(x, y, z)
-            if (neighborVoxel) this.updateVoxel(neighborVoxel, true)
+           // if (neighborVoxel) this.updateVoxel(neighborVoxel, true)
           }
         })
       }

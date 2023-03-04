@@ -1,24 +1,8 @@
 // TODO: Rename a lot of these types so they are more rational. It's a bit confusing to know when/how to use one.
 
-export enum TileType {
-  DEFAULT,
-  WALL,
-  EXTERIOR,
-  INTERIOR,
-  FLOOR,
-  GROUND,
-  WINDOW,
-  DOORWAY
-}
+import { TileData, VoxelTileType } from "./tiles/interfaces"
 
-export interface TileData {
-  model: string
-  allowRotation: boolean
-  above: number[][]
-  same: number[][]
-  below: number[][]
-  flattened: number[]
-}
+
 
 export enum TileConditions {
   NULL,
@@ -42,11 +26,11 @@ export interface TileMatchmakerResult {
   tileIndex: number
 }
 
-export interface TileSet {
-  name: string
-  type: TileType
-  tiles: Partial<TileData>[]
-}
+// export interface TileSet {
+//   name: string
+//   type: VoxelTileType
+//   tiles: Partial<TileData>[]
+// }
 
 export interface VoxelComponentSettings {
   x: number
@@ -82,6 +66,9 @@ export enum QuadTilePosition {
 export enum AppMode {
   NULL, // VIEW
   EDIT,
-  DELETE,
-  MOVE
+}
+
+export enum EditVoxelType {
+  BLOCK,
+  TILE,
 }

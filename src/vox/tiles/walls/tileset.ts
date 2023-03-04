@@ -1,14 +1,15 @@
 // Theoretically, we can make a blender export utilitiy for generating this kind of file
 // Perhaps the output of that blender json file will be parsed by a utility function?
 
-import { TileSet, TileConditions, TileType } from "../../interfaces";
-import { parseTile } from "../../utils/helpers";
+import { TileSet, TileConditions } from "../../interfaces";
+import { VoxelTileType } from "../interfaces";
+import { parseTile } from "../utils";
 
 const getModelSrc = (id: number) => `models/walls/walls_type_${id}.glb`
 
 export const Tiles_Walls_FULL: TileSet = {
     name: "defaultTiles",
-    type: TileType.WALL,
+    type: VoxelTileType.WALL,
     tiles: parseTile([
         {
             model: getModelSrc(1),

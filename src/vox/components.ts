@@ -8,11 +8,15 @@ export const GroundTileComponent = engine.defineComponent('GroundTileComponent',
   z: Schemas.Number
 })
 
-export const VoxelTileComponent = engine.defineComponent('VoxelTileComponent', {
+export const VoxelComponent = engine.defineComponent('VoxelComponent', {
   x: Schemas.Number,
   y: Schemas.Number,
   z: Schemas.Number,
-  tileSetId: Schemas.Number,
-  tileSetType: Schemas.Number,
   entityId: Schemas.Entity
+})
+
+export const VoxelTypeComponent = engine.defineComponent('VoxelTileComponent', {
+  voxelType: Schemas.Number,
+  voxelSetId: Schemas.Number,
+  voxelTypeId: Schemas.Number,
 })
