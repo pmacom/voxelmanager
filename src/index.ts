@@ -9,7 +9,7 @@ import { ui } from './vox/ui'
 import { getUserData } from "~system/UserIdentity"
 import { VideoScreenComponent, VoxelComponent } from './vox/components'
 import { DCLConnect } from './dclconnect/dclconnect'
-import { GameController } from './vox/server'
+// import { GameController } from './vox/server'
 
 executeTask(async function () {
   // Theoretically all of these should fire from the VoxelManager.init
@@ -19,9 +19,7 @@ executeTask(async function () {
   VoxelCursor.init()
   VoxelManager.init()
 
-  VoxelManager.setId(2, 2, 2, 1)
-
-  const gc = new GameController()
-
- // ReactEcsRenderer.setUiRenderer(ui) 
+  // VoxelManager.setId(2, 2, 2, 1)
+  // const gc = new GameController()
+  // ReactEcsRenderer.setUiRenderer(ui) 
 })

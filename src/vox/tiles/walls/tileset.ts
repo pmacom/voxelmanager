@@ -1,15 +1,25 @@
 // Theoretically, we can make a blender export utilitiy for generating this kind of file
 // Perhaps the output of that blender json file will be parsed by a utility function?
 
-import { TileSet, VoxelConditions, VoxelType } from "../../interfaces";
-import { GetTileSetWithCalculatedWeights } from "../../utils/weights";
+import { flattenDeep } from "lodash";
+import { TileData, TileSet, VoxelConditions, VoxelType } from "../../interfaces";
 
 const getModelSrc = (id: number) => `models/walls/walls_type_${id}.glb`
+
+const parse = (tiles: Partial<TileData>[]) => {
+    return tiles.map(tile => {
+        if(tile.above && tile.same && tile.below){
+            tile.flattened = flattenDeep([...tile.above, ...tile.same, ...tile.below])
+        }
+        console.log(tile.flattened)
+        return tile
+    })
+}
 
 export const Tiles_Walls_FULL: TileSet = {
     name: "defaultTiles",
     type: VoxelType.WALL,
-    tiles: GetTileSetWithCalculatedWeights([
+    tiles: parse([
         {
             model: getModelSrc(1),
             allowRotation: true,
@@ -336,9 +346,12 @@ export const Tiles_Walls_FULL: TileSet = {
     ])    
 }
 
+export const Tiles_Walls = Tiles_Walls_FULL
 // Slim down the options for testing.
-export const Tiles_Walls = {
-    name: "defaultTiles",
-    type: VoxelType.WALL,
-    tiles: Tiles_Walls_FULL.tiles.slice(0,3)
-}
+// export const Tiles_Walls = {
+//     name: "defaultTiles",
+//     type: VoxelType.WALL,
+//     tiles: Tiles_Walls_FULL.tiles.slice(0,3)
+// }
+
+console.log({ Tiles_Walls })

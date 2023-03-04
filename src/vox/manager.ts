@@ -54,18 +54,58 @@ class VoxelManagerInstance {
         const voxels: (VoxelComponentSettings | undefined)[] = []
         const ids: (VoxelNeighbors | undefined)[] = []
 
-        // Get the neighboring voxels if they exist. Push them (if any) into the array
-        forEachGrid({ x: x - 1, y: y - 1, z: z - 1 }, { x: x + 1, y: y + 1, z: z + 1 }, (x: number, y: number, z: number) => {
-          voxels.push(this.getMutableVoxelComponent(x, y, z))
-        })
+
+
+
+        voxels.push(this.getMutableVoxelComponent(x+1, y+1, z-1))
+        voxels.push(this.getMutableVoxelComponent(x+1, y+1, z))
+        voxels.push(this.getMutableVoxelComponent(x+1, y+1, z+1))
+
+        voxels.push(this.getMutableVoxelComponent(x, y+1, z-1))
+        voxels.push(this.getMutableVoxelComponent(x, y+1, z))
+        voxels.push(this.getMutableVoxelComponent(x, y+1, z+1))
+
+        voxels.push(this.getMutableVoxelComponent(x-1, y+1, z-1))
+        voxels.push(this.getMutableVoxelComponent(x-1, y+1, z))
+        voxels.push(this.getMutableVoxelComponent(x-1, y+1, z+1))
+
+
+
+
+        voxels.push(this.getMutableVoxelComponent(x+1, y, z-1))
+        voxels.push(this.getMutableVoxelComponent(x+1, y, z))
+        voxels.push(this.getMutableVoxelComponent(x+1, y, z+1))
+
+        voxels.push(this.getMutableVoxelComponent(x, y, z-1))
+        voxels.push(this.getMutableVoxelComponent(x, y, z))
+        voxels.push(this.getMutableVoxelComponent(x, y, z+1))
+
+        voxels.push(this.getMutableVoxelComponent(x-1, y, z-1))
+        voxels.push(this.getMutableVoxelComponent(x-1, y, z))
+        voxels.push(this.getMutableVoxelComponent(x-1, y, z+1))
+
+
+
+
+        voxels.push(this.getMutableVoxelComponent(x+1, y-1, z-1))
+        voxels.push(this.getMutableVoxelComponent(x+1, y-1, z))
+        voxels.push(this.getMutableVoxelComponent(x+1, y-1, z+1))
+
+        voxels.push(this.getMutableVoxelComponent(x, y-1, z-1))
+        voxels.push(this.getMutableVoxelComponent(x, y-1, z))
+        voxels.push(this.getMutableVoxelComponent(x, y-1, z+1))
+
+        voxels.push(this.getMutableVoxelComponent(x-1, y-1, z-1))
+        voxels.push(this.getMutableVoxelComponent(x-1, y-1, z))
+        voxels.push(this.getMutableVoxelComponent(x-1, y-1, z+1))
 
         // Slice the array to grab each layer
-        const above = GetAbove(voxels)
-        const same = GetSame(voxels)
-        const below = GetBelow(voxels)
+        // const above = GetAbove(voxels)
+        // const same = GetSame(voxels)
+        // const below = GetBelow(voxels)
 
         // Set the neighbors
-        this.neighbors.set(path, { above, same, below, flattened: voxels } as VoxelNeighbors)
+        this.neighbors.set(path, { flattened: voxels } as VoxelNeighbors)
       })
 
       // Set the voxel
@@ -105,12 +145,14 @@ class VoxelManagerInstance {
 
   private updateVoxel(voxel: VoxelComponentSettings, initiator?: Entity) {
     // console.log('Updating a voxel', voxel, initiator)
+    console.log('UPDATING A VOXEL')
     const { x, y, z, tileSetId, entityId } = voxel
     const path = getPath(x, y, z)
     const tileSet = VoxelTileSets[tileSetId]
     if (!tileSet) return
     const { tiles } = tileSet
     const neighbors = this.neighbors.get(path)
+    console.log({ neighbors })
     if (!neighbors) return
     const { flattened } = neighbors
     const neighborIdsFlattened = flattened.map((item) => (item && item.tileSetId ? item.tileSetId : 0))
@@ -120,13 +162,16 @@ class VoxelManagerInstance {
     tiles.forEach((tile: Partial<TileData>, tileIndex: number) => {
       const { flattened: conditionIdsFlattened, model } = tile
       if (!conditionIdsFlattened || !model) return
+      console.log('STARTING')
       const matchData = VoxelMatchmaker(neighborIdsFlattened, conditionIdsFlattened, tileIndex, tileSetId)
-      const { strength, tileIndex: tileId } = matchData
-      if (!bestMatch || !bestMatch.strength || !strength || !matchData.strength) return
-      if (bestMatch.strength < matchData.strength) {
-        bestMatch = matchData
-        // console.log('Found a new best match', matchData)
-      }
+
+      console.log({ matchData })
+      // const { strength, tileIndex: tileId } = matchData
+      // if (!bestMatch || !bestMatch.strength || !strength || !matchData.strength) return
+      // if (bestMatch.strength < matchData.strength) {
+      //   bestMatch = matchData
+      //   // console.log('Found a new best match', matchData)
+      // }
     })
 
     let rotation = 0
@@ -150,16 +195,16 @@ class VoxelManagerInstance {
     if (src) {
       GltfContainer.createOrReplace(entityId as Entity, { src })
       MeshCollider.setBox(entityId as Entity)
-      if (neighbors) {
-        neighbors.flattened.forEach((neighbor: VoxelComponentSettings, index: number) => {
-          if (!neighbor || index == 13) return // Ignore yourself
-          const { tileSetId, x, y, z } = neighbor
-          if (tileSetId !== 0) {
-            const neighborVoxel = this.getMutableVoxelComponent(neighbor.x, neighbor.y, neighbor.z)
-            if (neighborVoxel) this.updateVoxel(neighborVoxel, initiator ? initiator : neighborVoxel.entityId)
-          }
-        })
-      }
+      // if (neighbors) {
+      //   neighbors.flattened.forEach((neighbor: VoxelComponentSettings, index: number) => {
+      //     if (!neighbor || index == 13) return // Ignore yourself
+      //     const { tileSetId, x, y, z } = neighbor
+      //     if (tileSetId !== 0) {
+      //       const neighborVoxel = this.getMutableVoxelComponent(neighbor.x, neighbor.y, neighbor.z)
+      //       if (neighborVoxel) this.updateVoxel(neighborVoxel, initiator ? initiator : neighborVoxel.entityId)
+      //     }
+      //   })
+      // }
     }
   }
 }
