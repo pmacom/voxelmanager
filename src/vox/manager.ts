@@ -5,7 +5,7 @@ import { forEachGrid, GetAbove, GetBelow, GetSame, RotationMapping } from './uti
 import { VoxelTileSets } from './tiles'
 import { getPath } from './utils/helpers'
 import { TileMatchmaker } from './utils/weights'
-import { DCLConnectSync, VoxelComponent } from './components'
+import { VoxelTileComponent } from './components'
 
 class VoxelManagerInstance {
   private voxels: Map<string, Entity> = new Map()
@@ -25,7 +25,7 @@ class VoxelManagerInstance {
       const s = 1
 
       // Create the voxel entity
-      const component = VoxelComponent.create(voxel, {
+      const component = VoxelTileComponent.create(voxel, {
         x,
         y,
         z,
@@ -139,7 +139,7 @@ class VoxelManagerInstance {
   private getMutableVoxelComponent(x: number, y: number, z: number) {
     const voxel = this.getVoxel(x, y, z)
     if (!voxel) return
-    return VoxelComponent.getMutable(voxel)
+    return VoxelTileComponent.getMutable(voxel)
   }
 
   private updateVoxel(voxel: VoxelComponentSettings, skipNeighborCheck: boolean = false) {
