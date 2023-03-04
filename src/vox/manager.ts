@@ -18,7 +18,7 @@ class VoxelManagerInstance {
     const callbacks: (() => void)[] = []
 
     // Create a forloop for each xyz of a 16x16x16 grid (one parcel)
-    forEachGrid(Vector3.create(0, 0, 0), Vector3.create(16, 16, 16), (x: number, y: number, z: number) => {
+    forEachGrid(Vector3.create(0, 0, 0), Vector3.create(16*2, 16, 16*2), (x: number, y: number, z: number) => {
       const voxel = engine.addEntity()
       const path = getPath(x, y, z)
       const p = Vector3.add(Vector3.create(x, y, z), Vector3.create(0.5, 0.5, 0.5))
@@ -32,15 +32,6 @@ class VoxelManagerInstance {
         tileSetId: 0,
         tileSetType: 0,
         entityId: voxel
-      })
-
-      /*
-      DCLConnectedEntity.create(entity, { components: ['Transform', 'CustomVideoScreenComponent], uuid: 'voxel1')
-      */
-
-      const schema = VoxelComponent.schema
-      DCLConnectSync.create(voxel, {
-        components: ['Transform', 'VoxelComponent']
       })
 
       Transform.create(voxel, {
@@ -114,6 +105,15 @@ class VoxelManagerInstance {
     callbacks.forEach((callback) => callback())
   }
 
+  setMeshCollider(entity: Entity, useCollider: boolean){
+    if(!entity) return
+    if(useCollider){
+      MeshCollider.setBox(entity)
+    }else{
+      MeshCollider.deleteFrom(entity)
+    }
+  }
+
   getVoxel(x: number, y: number, z: number): Entity | undefined {
     const path = getPath(x, y, z)
     const voxel = this.voxels.get(path)
@@ -169,7 +169,7 @@ class VoxelManagerInstance {
     if (src) {
       Transform.getMutable(voxel.entityId as Entity).rotation = Quaternion.fromEulerDegrees(0, RotationMapping[bestMatch.rotation] as number, 0)
       GltfContainer.createOrReplace(entityId as Entity, { src })
-      MeshCollider.setBox(entityId as Entity)
+      this.setMeshCollider(entityId as Entity, true)
       if (neighbors && !skipNeighborCheck) {
         neighbors.flattened.forEach((neighbor: VoxelComponentSettings, index: number) => {
           if (!neighbor || index == 13) return // Ignore yourself (befo yo wrek yosef)

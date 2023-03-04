@@ -15,7 +15,7 @@ executeTask(async function () {
   // Theoretically all of these should fire from the VoxelManager.init
   // However there are quite a lot of circular dependencies if we try to do that right now
 
-  VoxelFloor.create(Vector3.Zero(), Vector3.create(16,0,16))
+  VoxelFloor.create(Vector3.Zero(), Vector3.create(16*2,0,16*2))
   VoxelCursor.init()
   VoxelManager.init()
 

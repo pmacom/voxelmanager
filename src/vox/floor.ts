@@ -37,8 +37,8 @@ class VoxelFloorInstance {
           scale: { x: s, y: s, z: s }
         })
         MeshCollider.setPlane(floorTile)
-        MeshRenderer.setPlane(floorTile, [...Dash_UV_QuadTile_Mappings[2][0], ...Dash_UV_QuadTile_Mappings[2][1]])
-        Material.setPbrMaterial(floorTile, this.texture)
+        // MeshRenderer.setPlane(floorTile, [...Dash_UV_QuadTile_Mappings[2][0], ...Dash_UV_QuadTile_Mappings[2][1]])
+        // Material.setPbrMaterial(floorTile, this.texture)
         FloorTileComponent.create(floorTile, { x, y: 0, z})
 
         // Set Click Event

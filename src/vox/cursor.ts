@@ -12,7 +12,7 @@ import { Dash_UV_QuadTile_Mappings } from '../dash/uvs'
 import { QuadTilePosition, VoxelSelectorSides } from './interfaces'
 
 
-const scale = 0.99
+const scale = .99
 const transforms: Map<VoxelSelectorSides, { position: { x: number; y: number; z: number }; rotation: Quaternion }> =
   new Map([
     [
