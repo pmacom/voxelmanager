@@ -90,10 +90,6 @@ class VoxelManagerInstance {
         voxels.push(this.getMutableVoxelComponent(x-1, y-1, z))
         voxels.push(this.getMutableVoxelComponent(x-1, y-1, z+1))
 
-        // Slice the array to grab each layer
-        // const above = GetAbove(voxels)
-        // const same = GetSame(voxels)
-        // const below = GetBelow(voxels)
 
         // Set the neighbors
         this.neighbors.set(path, { flattened: voxels } as VoxelNeighbors)
@@ -103,6 +99,10 @@ class VoxelManagerInstance {
       this.voxels.set(getPath(x, y, z), voxel)
     })
     callbacks.forEach((callback) => callback())
+
+    // forEachGrid(Vector3.create(0, 0, 0), Vector3.create(16*2, 16, 16*2), (x: number, y: number, z: number) => {
+    //   if(Math.random()>.8) this.setId(x,y,z,1)
+    // })
   }
 
   setMeshCollider(entity: Entity, useCollider: boolean){
@@ -128,7 +128,6 @@ class VoxelManagerInstance {
 
   setId(x: number, y: number, z: number, tileSetId: number) {
     const voxelComponent = this.getMutableVoxelComponent(x, y, z)
-    // console.log('VOX7 - Creating a voxel with id', voxelComponent?.entityId, { x, y, z })
     if (!voxelComponent || voxelComponent.tileSetId == tileSetId) return // If they are already the same, drop out
     const tileSet = VoxelTileSets[tileSetId]
     if (!tileSet) return

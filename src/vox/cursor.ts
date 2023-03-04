@@ -68,7 +68,11 @@ class VoxelCursorInstance {
   )
 
   constructor() {
-    Transform.create(this.entity, { position: { x: 1, y: 2, z: 1 } })
+    const s = 1 // For Testing collisions
+    Transform.create(this.entity, {
+      position: { x: 1, y: 2, z: 1 },
+      scale: {x: s, y: s, z: s }
+    })
     MeshRenderer.setBox(this.entity)
     const color = Color4.create(0.5, 1, 0.5, 0.2)
     Material.setPbrMaterial(this.entity, {

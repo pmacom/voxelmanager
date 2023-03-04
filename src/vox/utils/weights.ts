@@ -1,19 +1,8 @@
-import { flattenDeep } from 'lodash'
 import { TileConditions, TileMatchmakerResult } from '../interfaces'
-import { VoxelManager } from '../manager'
-import { TileData } from '../interfaces'
-import { Schemas } from '@dcl/sdk/ecs'
-
-export const GetTileWeight = (x: number, y: number, z: number) => {
-  const neighbors = VoxelManager.getNeighbors(x, y, z)
-  if (!neighbors) return 0
-  console.log({ neighbors })
-}
-
 
 const rotation_0 = [
     0, 1, 2, 3, 4, 5, 6, 7, 8,
-  
+
     9, 10, 11, 12, 13, 14, 15, 16, 17,
   
     18, 19, 20, 21, 22, 23, 24, 25, 26
@@ -80,43 +69,6 @@ export const TileMatchmaker = (
     }
   })
 
-//   rotations.forEach((rotatedIndexes: number[], rotationIndex: number) => {
-//     console.log('checking rotation', rotationIndex)
-//     console.log(`ComparingLocal${tileIndex} - WE BEGIN THE MADNESS`, neighborIdsFlattened, rotatedIndexes)
-//     let localstrength = 0
-//     // console.log('Checking Rotation', rIndex)
-//     rotatedIndexes.forEach((id: number, index: number) => {
-//       if (index == 13 || localstrength < 0) return
-//       console.log(`ComparingLocal${tileIndex} ----------- ComparingLocal`)
-//       switch (conditionIdsFlattened[id]) {
-//         // case VoxelConditions.IsAnyTile:
-//         //     localstrength = neighborIdsFlattened[id] > 0 ? localstrength+1 : -1
-//         //     break;
-//         case TileConditions.IsSameTileId:
-//           if (neighborIdsFlattened[id] == tileSetId) {
-//             console.log(`ComparingLocal${tileIndex} +1`)
-//             localstrength++
-//           }else{
-//             console.log(`ComparingLocal${tileIndex} -1 - DUMPING`, { neighborId: neighborIdsFlattened[id], myTileSetId: tileSetId})
-//             localstrength=-1
-//           }
-//           console.log(`ComparingLocal${tileIndex} IsSameTileId result`, { localstrength, strength })
-//           break
-//         default:
-//             break;
-//         // case VoxelConditions.IsEmptyOrOther:
-//         //     localstrength = neighborIdsFlattened[id] !== tileSetId ? localstrength+1 : -1
-//         //     break;
-//       }
-//     })
-//     console.log(`ComparingLocal${tileIndex}`, { strength, localstrength })
-//     if (localstrength > strength) {
-//       rotationIndex = rotationIndex
-//       strength = localstrength
-//       console.log(`ComparingLocal${tileIndex} Updating strength to`, localstrength)
-//     }
-//   })
-  console.log('--- DONE WITH MATCHMAKING', { rotation, strength, tileIndex })
   return { rotation, strength, tileIndex }
 }
 

@@ -1,20 +1,10 @@
 // Theoretically, we can make a blender export utilitiy for generating this kind of file
 // Perhaps the output of that blender json file will be parsed by a utility function?
 
-import { flattenDeep } from "lodash";
-import { TileData, TileSet, TileConditions, TileType } from "../../interfaces";
+import { TileSet, TileConditions, TileType } from "../../interfaces";
+import { parseTile } from "../../utils/helpers";
 
 const getModelSrc = (id: number) => `models/walls/walls_type_${id}.glb`
-
-const parseTile = (tiles: Partial<TileData>[]) => {
-    return tiles.map(tile => {
-        if(tile.above && tile.same && tile.below){
-            tile.flattened = flattenDeep([...tile.above, ...tile.same, ...tile.below])
-        }
-        console.log(tile.flattened)
-        return tile
-    })
-}
 
 export const Tiles_Walls_FULL: TileSet = {
     name: "defaultTiles",
