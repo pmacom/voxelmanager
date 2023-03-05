@@ -80,7 +80,8 @@ class VoxelManagerInstance {
   }
 
   getNeighbors(x: number, y: number, z: number, radius: number = 1){
-    if(this.voxels.has(getPath(x,y,z))){
+    const path = getPath(x,y,z)
+    if(this.voxels.has(path)){
       return []
     }
   }
