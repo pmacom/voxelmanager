@@ -34,10 +34,5 @@ export abstract class VoxelBlock implements Voxel {
   public abstract behavior: VoxelBehavior
   public type: VoxelType = VoxelType.BLOCK
   public entity: Entity = engine.addEntity()
-
   constructor(public x: number, public y: number, public z: number) {}
-  onClick?(): void
-  onHoverEnter?(): void
-  onHoverExit?(): void
-  onDestroy?(): void
 }

@@ -1,4 +1,4 @@
-import { MapComponentDefinition, MapResult } from "@dcl/sdk/ecs"
+import { Entity, MapComponentDefinition, MapResult } from "@dcl/sdk/ecs"
 import { VoxelBehaviorActions } from "./enums"
 
 export interface TileDisplaySettings {
@@ -10,18 +10,18 @@ export interface TileDisplaySettings {
 
 export interface BlockDisplaySettings {
   name: string // Brick, Grass, Sand, TNT, Bedrock, Flag
-  blockId: number
+  modelSrc: string //
 }
 
 export interface VoxelBehavior {
-  indestructable?: boolean
-  health?: number
+  state?: any // TODO: REMOVE
   actions?: VoxelBehaviorActions[]
   components?: MapComponentDefinition<MapResult<any>>[]
-  onClick?(): void
-  onHoverEnter?(): void
-  onHoverExit?(): void
-  onDestroy?(): void
-  onEnter?(): void
-  onExit?(): void
+  onClick?(entity?: Entity, behavior?: VoxelBehavior): void
+  onDestroy?(entity?: Entity, behavior?: VoxelBehavior): void
+  onHoverEnter?(entity?: Entity, behavior?: VoxelBehavior): void
+  onHoverExit?(entity?: Entity, behavior?: VoxelBehavior): void
+  onDestroy?(entity?: Entity, behavior?: VoxelBehavior): void
+  onEnter?(entity?: Entity, behavior?: VoxelBehavior): void
+  onExit?(entity?: Entity, behavior?: VoxelBehavior): void
 }

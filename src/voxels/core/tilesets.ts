@@ -11,7 +11,6 @@ const display: TileDisplaySettings = {
 }
 
 const behavior: VoxelBehavior = { // There are a lot of options here
-  health: 100
   // indestructable?: boolean
   // actions?: VoxelBehaviorActions[]
   // components?: MapComponentDefinition<MapResult<any>>[]

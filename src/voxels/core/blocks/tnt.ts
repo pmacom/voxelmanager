@@ -4,11 +4,11 @@ import { BlockDisplaySettings, VoxelBehavior } from "../interfaces"
 
 const display: BlockDisplaySettings = {
   name: "TNT",
-  blockId: 2
+  modelSrc: 'models/blocks/tnt.glb'
 }
 
 const behavior: VoxelBehavior = {
-  health: 100
+  state: { health: 100 },
 }
 
 export class Block_TNT extends VoxelBlock {

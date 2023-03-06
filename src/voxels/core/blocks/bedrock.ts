@@ -3,16 +3,16 @@ import { VoxelBlock } from "../classes"
 import { BlockDisplaySettings, VoxelBehavior } from "../interfaces"
 
 const display: BlockDisplaySettings = {
-  name: "Grass",
-  modelSrc: 'models/blocks/grass.glb'
+  name: "Bedrock",
+  modelSrc: 'models/blocks/bedrock.glb'
 }
 
 const behavior: VoxelBehavior = {
-  state: { health: 100 },
+  state: { health: 100 }
 }
 
-export class Block_Grass extends VoxelBlock {
-  public label: string = "Grass"
+export class Block_Dirt extends VoxelBlock {
+  public label: string = "Bedrock"
   public display: BlockDisplaySettings = display
   public behavior: VoxelBehavior = behavior
   onDestroy(){

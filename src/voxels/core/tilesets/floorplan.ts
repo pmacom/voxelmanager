@@ -10,7 +10,7 @@ const display: TileDisplaySettings = {
 }
 
 const behavior: VoxelBehavior = {
-  health: 100
+  
 }
 
 export class TileSet_FloorPlan_Default extends VoxelTile {
