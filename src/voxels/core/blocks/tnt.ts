@@ -3,8 +3,9 @@ import { VoxelBlock } from "../classes"
 import { BlockDisplaySettings, VoxelBehavior } from "../interfaces"
 
 const display: BlockDisplaySettings = {
-  name: "TNT",
-  modelSrc: 'models/blocks/tnt.glb'
+  displayName: "TNT",
+  modelSrc: 'models/blocks/tnt.glb',
+  thumbnail: 'images/thumbnails/blocks/dirt.png'
 }
 
 const behavior: VoxelBehavior = {

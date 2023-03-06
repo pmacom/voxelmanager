@@ -3,8 +3,9 @@ import { VoxelBlock } from "../classes"
 import { BlockDisplaySettings, VoxelBehavior } from "../interfaces"
 
 const display: BlockDisplaySettings = {
-  name: "Bedrock",
-  modelSrc: 'models/blocks/bedrock.glb'
+  displayName: "Bedrock",
+  modelSrc: 'models/blocks/bedrock.glb',
+  thumbnail: 'images/thumbnails/blocks/bedrock.png'
 }
 
 const behavior: VoxelBehavior = {

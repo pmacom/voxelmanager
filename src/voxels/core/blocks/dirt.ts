@@ -1,4 +1,5 @@
 import { engine, Entity, GltfContainer, Schemas } from "@dcl/sdk/ecs"
+import { Audio_PlayOnce, Audio_PlayOnce_Random } from "../audio/playSound"
 import { VoxelBlock } from "../classes"
 import { BlockDisplaySettings, VoxelBehavior } from "../interfaces"
 
@@ -21,7 +22,13 @@ const behavior: VoxelBehavior = {
     const { onDestroy } = behavior
     if(state){
       if(state.health > 0){
-        state.health-=10
+        state.health-=25
+        Audio_PlayOnce_Random([
+          'sounds/dig/grass1.mp3',
+          'sounds/dig/grass2.mp3',
+          'sounds/dig/grass3.mp3',
+          'sounds/dig/grass4.mp3',
+        ])
         console.log('TAKING DAMAGE', state.health)
         if(state.health <= 0 && onDestroy) onDestroy(entity)
       }
