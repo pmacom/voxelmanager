@@ -9,8 +9,9 @@ const stateDefault = { health: 100 }
 export const Block_Dirt_State = engine.defineComponent(stateName, stateSchema, stateDefault)
 
 const display: BlockDisplaySettings = {
-  name: "Dirt",
-  modelSrc: 'models/blocks/dirt.glb'
+  displayName: "Dirt",
+  modelSrc: 'models/blocks/dirt.glb',
+  thumbnail: 'images/thumbnails/blocks/dirt.png'
 }
 
 const behavior: VoxelBehavior = {

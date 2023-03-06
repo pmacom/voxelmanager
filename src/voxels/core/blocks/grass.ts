@@ -3,8 +3,9 @@ import { VoxelBlock } from "../classes"
 import { BlockDisplaySettings, VoxelBehavior } from "../interfaces"
 
 const display: BlockDisplaySettings = {
-  name: "Grass",
-  modelSrc: 'models/blocks/grass.glb'
+  displayName: "Grass",
+  modelSrc: 'models/blocks/grass.glb',
+  thumbnail: 'images/thumbnails/blocks/grass.png'
 }
 
 const behavior: VoxelBehavior = {

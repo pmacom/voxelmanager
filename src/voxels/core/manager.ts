@@ -39,7 +39,7 @@ class VoxelManagerInstance {
   private setBlock(voxel: VoxelBlock){
     const { display, behavior, entity, x, y, z } = voxel as VoxelBlock
     const { state, onClick, onHoverEnter, onHoverExit, onDestroy, onEnter, onExit, components } = behavior
-    const { name, modelSrc } = display
+    const { displayName, modelSrc } = display
     GltfContainer.createOrReplace(entity, { src: modelSrc })
     components?.forEach((component:MapComponentDefinition<MapResult<any>>) => {
       console.log(component)

@@ -9,8 +9,9 @@ export interface TileDisplaySettings {
 }
 
 export interface BlockDisplaySettings {
-  name: string // Brick, Grass, Sand, TNT, Bedrock, Flag
+  displayName: string // Brick, Grass, Sand, TNT, Bedrock, Flag
   modelSrc: string //
+  thumbnail: string
 }
 
 export interface VoxelBehavior {
