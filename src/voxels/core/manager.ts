@@ -33,7 +33,7 @@ class VoxelManagerInstance {
       case VoxelType.TILE: this.setTile(voxel as VoxelTile); break;
       default: break;
     }
-    this.voxels.set(getPath(x,y,z), voxel)
+    this.voxels.set(getPath(x,y,z), voxel) // '2,2,2'
 
   }
 

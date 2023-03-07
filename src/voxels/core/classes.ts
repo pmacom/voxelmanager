@@ -35,3 +35,7 @@ export abstract class VoxelBlock implements Voxel {
   public entity: Entity = engine.addEntity()
   constructor(public x: number, public y: number, public z: number) {}
 }
+
+export abstract class DCLConnectEntity {
+  public entity: Entity = engine.addEntity()
+}
