@@ -1,5 +1,5 @@
 import { getPath } from "./helpers"
-import { Voxel, VoxelBlock } from "./classes"
+import { Voxel, VoxelBlock, VoxelTile } from "./classes"
 import { VoxelType } from "./enums"
 import { GltfContainer, MapComponentDefinition, MapResult, pointerEventsSystem, Transform } from "@dcl/sdk/ecs"
 
@@ -30,11 +30,14 @@ class VoxelManagerInstance {
     const { x, y, z, type } = voxel
     switch(type){
       case VoxelType.BLOCK: this.setBlock(voxel as VoxelBlock); break;
+      case VoxelType.TILE: this.setTile(voxel as VoxelTile); break;
       default: break;
     }
-    this.voxels.set(`${x},${y},${z}`, voxel)
+    this.voxels.set(getPath(x,y,z), voxel)
 
   }
+
+  private setTile(voxel: VoxelTile){}
 
   private setBlock(voxel: VoxelBlock){
     const { display, behavior, entity, x, y, z } = voxel as VoxelBlock

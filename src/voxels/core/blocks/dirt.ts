@@ -1,22 +1,39 @@
 import { engine, Entity, GltfContainer, Schemas } from "@dcl/sdk/ecs"
 import { Audio_PlayOnce, Audio_PlayOnce_Random } from "../audio/playSound"
 import { VoxelBlock } from "../classes"
+import { VoxelBehaviorActions } from "../enums"
 import { BlockDisplaySettings, VoxelBehavior } from "../interfaces"
 
-const stateName = 'VoxelManager:Block_Dirt_State'
-const stateSchema = { health: Schemas.Number }
-const stateDefault = { health: 100 }
+const stateName = 'VoxelManager::Block_Dirt_State'
+const stateSchema = {
+  timer: Schemas.Number,
+  health: Schemas.Number,
+  throttle: Schemas.Number,
+  // decay: Schemas.Number, // how many seconds till it goes away
+  // event: Schemas.String, // 'destroy',
+  // timestamp: Schemas.Number, // 1
+}
+
+const stateDefault = {
+  timer: 0,
+  health: 100,
+  throttle: 2,
+  // decay: 99999999
+}
 
 export const Block_Dirt_State = engine.defineComponent(stateName, stateSchema, stateDefault)
 
 const display: BlockDisplaySettings = {
   displayName: "Dirt",
   modelSrc: 'models/blocks/dirt.glb',
-  thumbnail: 'images/thumbnails/blocks/dirt.png'
+  thumbnail: 'images/thumbnails/blocks/dirt.png',
 }
 
 const behavior: VoxelBehavior = {
   components: [Block_Dirt_State],
+  // actions: [
+  //   VoxelBehaviorActions.COLLECTABLE,
+  // ],
   onClick: (entity: Entity, behavior: VoxelBehavior) => {
     const state = Block_Dirt_State.getMutableOrNull(entity)
     const { onDestroy } = behavior

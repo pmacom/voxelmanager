@@ -29,7 +29,6 @@ export abstract class VoxelTile implements Voxel {
 }
 
 export abstract class VoxelBlock implements Voxel {
-  public abstract label?: string
   public abstract display: BlockDisplaySettings
   public abstract behavior: VoxelBehavior
   public type: VoxelType = VoxelType.BLOCK
